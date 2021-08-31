@@ -4,13 +4,10 @@ import { useHistory, Switch, Route, Redirect } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { selectUser, verifyToken } from '../../reducers/user';
 import {
-  REDUX_PAGE_PATH, ROOMLIST_PATH, ROOM_PATH,
   LOGIN_PATH, PROFILE_PATH,
 } from '../../config/paths';
 import { ACCESS_TOKEN } from '../../config/localStorage';
-import ReduxPage from '../ReduxPage';
-import RoomList from '../RoomList';
-import Room from '../Room';
+
 import Profile from '../Profile';
 import {
   HeaderAccountCircle as AccountCircle,
@@ -105,23 +102,11 @@ const Dashboard = () => {
       </Header>
 
       <FlexContainer>
-        {/* <SideNavContainer>
-          {['Item 1', 'Item 2', 'Item 3', 'Item 4'].map((text) => (
-            <SideNavItem key={text} disableRipple>
-              {text}
-            </SideNavItem>
-          ))}
-          <Divider />
-        </SideNavContainer> */}
-
         <ContentContainer>
           <Switch>
-            <Route path={REDUX_PAGE_PATH} component={ReduxPage} />
-            <Route path={`${ROOM_PATH}/:id`} component={Room} />
-            <Route path={ROOMLIST_PATH} component={RoomList} />
             <Route path={`${PROFILE_PATH}/:id`} component={Profile} />
             <Route path="/*">
-              <Redirect to={ROOMLIST_PATH} />
+              <Redirect to={PROFILE_PATH} />
             </Route>
           </Switch>
         </ContentContainer>

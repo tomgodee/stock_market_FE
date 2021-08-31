@@ -1,6 +1,3 @@
-import { cardValues } from '../config/constants';
-import cardImages from '../assets/cards';
-
 export const sum = (a: number, b: number) => {
   return a + b;
 };
@@ -18,12 +15,7 @@ export const shuffle = (text: string) => {
   return a.join('');
 };
 
-export const getCardImageName = (value: number, suite: string): string => {
-  return `${cardValues.get(value)}Of${suite.slice(0, 1).toUpperCase()}${suite.slice(1)}`;
-};
-
 export default {
   sum,
   shuffle,
-  getCardImageName,
 };
