@@ -1,6 +1,6 @@
-import pingService from '../services/ping';
+import pingService from '../../services/ping';
 
-jest.mock('../services/ping/ping');
+jest.mock('../../services/ping/ping');
 
 describe('ping', () => {
   afterEach(() => jest.restoreAllMocks());
