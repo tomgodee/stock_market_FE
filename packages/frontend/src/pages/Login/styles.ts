@@ -44,13 +44,6 @@ export const LoginForm = styled.form<LoginItemGridProps>`
 export const LoginButton = styled(Button)`
   align-self: center;
 `;
-export const LoginCard = styled(Card)`
-
-`;
-export const LoginCardContent = styled(CardContent)``;
-export const LoginCardMedia = styled(CardMedia)`
-  height: 581px;
-`;
 
 export const LoginTextField = styled(TextField)`
   margin-bottom: 1rem;

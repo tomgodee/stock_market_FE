@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { ROOMLIST_PATH } from '../../config/paths';
 import { ACCESS_TOKEN } from '../../config/localStorage';
 import { LOADING } from '../../config/status';
@@ -11,32 +11,28 @@ import {
   LoginContainerGrid as ContainerGrid,
   LoginItemGrid as ItemGrid,
   LoginButton as Button,
-  LoginCard as Card,
-  LoginCardMedia as CardMedia,
   LoginTextField as TextField,
   LoginForm as Form,
-  LoadingOverlay,
-  LoadingIcon,
 } from './styles';
-import { logo } from '../../assets';
 import { LoginForm } from '../../types/user';
+import { BASIC_INPUT_VALIDATION } from '../../utils/formValidator';
 
-const BASIC_INPUT_VALIDATION = { required: true, maxLength: 256 };
 const USERNAME = 'username';
 const PASSWORD = 'password';
 
 const Login = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const user = useSelector(selectUser);
+  const user = useAppSelector(selectUser);
 
-  const { handleSubmit, control, formState: { errors } } = useForm<LoginForm>({
+  const { handleSubmit, trigger, control, formState: { errors, isValid } } = useForm<LoginForm>({
     defaultValues: {
-      username: '',
-      password: '',
+      [USERNAME]: '',
+      [PASSWORD]: '',
     },
     criteriaMode: 'all',
     shouldFocusError: true,
+    mode: 'onChange',
   });
 
   const submitHandler = (data: LoginForm) => {
@@ -52,18 +48,7 @@ const Login = () => {
 
   return (
     <Container>
-      <LoadingOverlay open={user.status === LOADING}>
-        <LoadingIcon />
-      </LoadingOverlay>
-
       <ContainerGrid container>
-        <ItemGrid item xs={12} md={7}>
-          <Card>
-            <CardMedia
-              image={logo}
-            />
-          </Card>
-        </ItemGrid>
         <ItemGrid item xs={12} md={5}>
           <Form onSubmit={handleSubmit(submitHandler)} $flex $directionColumn>
             <Controller
@@ -81,9 +66,9 @@ const Login = () => {
                     error={error}
                     autoFocus
                     color="primary"
-                    label="Username"
-                    id={USERNAME}
-                    name={USERNAME}
+                    label={field.name}
+                    id={field.name}
+                    name={field.name}
                     required
                     type="text"
                     variant="outlined"
@@ -106,9 +91,9 @@ const Login = () => {
                     inputRef={field.ref}
                     error={error}
                     color="primary"
-                    label="Password"
-                    id={PASSWORD}
-                    name={PASSWORD}
+                    label={field.name}
+                    id={field.name}
+                    name={field.name}
                     required
                     type="password"
                     variant="outlined"
@@ -117,7 +102,7 @@ const Login = () => {
                 );
               }}
             />
-            <Button type="submit" variant="contained" color="primary">Log in</Button>
+            <Button type="submit" disabled={!isValid} variant="contained" color="primary">Log in</Button>
           </Form>
         </ItemGrid>
       </ContainerGrid>
