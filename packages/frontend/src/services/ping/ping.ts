@@ -1,8 +1,6 @@
 import baseService from '../baseApi';
 
-function ping(): any {
-  return baseService.get('/ping');
-}
+const ping = () => baseService.get('/ping').then((data) => data);
 
 export default {
   ping,

@@ -9,10 +9,10 @@
 * ReactJS + Typescript
 * Redux
 * Styled-component
+* Jest
 
 ## Deployment:
+* Deployed to aws S3 and cloudfront
 
 ### CI/CD:
-
-### Prod env:
-* Deployed to aws S3 and cloudfront
+* Github Actions
