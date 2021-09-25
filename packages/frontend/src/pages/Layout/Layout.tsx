@@ -15,15 +15,15 @@ import {
   FlexContainer,
   ContentContainer,
   HeaderProfileContainer,
-  SideNavContainer,
-  SideNavItem,
   HeaderToolbar as Toolbar,
   HeaderIconButton as IconButton,
   HeaderMenu,
   HeaderMenuItem,
   HeaderMenuIcon,
-  HeaderTypography,
 } from './styles';
+import {
+  Text,
+} from '../../components/Common/styles';
 // import authenticationService from '../../services/authentication';
 // import { logo } from '../../assets';
 
@@ -70,9 +70,7 @@ const Dashboard = () => {
           <IconButton>
             <HeaderMenuIcon />
           </IconButton>
-          <HeaderTypography>
-            Pokermon
-          </HeaderTypography>
+          <Text>Pokermon</Text>
 
           <HeaderProfileContainer>
             <IconButton

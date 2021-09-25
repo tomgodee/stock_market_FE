@@ -7,7 +7,6 @@ import {
   Menu,
   MenuItem,
   Toolbar,
-  Typography,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -17,7 +16,6 @@ export const HeaderAccountCircle = styled(AccountCircle)`
 `;
 
 export const Header = styled(AppBar)`
-  background: ${prussianBlue};
   position: static;
   box-shadow: 0 2px 21px rgb(0 0 0 / 60%);
 `;
@@ -70,9 +68,6 @@ export const HeaderIconButton = styled(IconButton)`
 `;
 
 export const HeaderToolbar = styled(Toolbar)`
-`;
-
-export const HeaderTypography = styled(Typography)`
 `;
 
 export const HeaderProfileContainer = styled.div`
