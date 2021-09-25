@@ -30,6 +30,7 @@ export const FlexContainer = styled.div`
 export const ContentContainer = styled.div`
   display: flex;
   flex: 1 0 auto;
+  width: 100%;
 `;
 
 export const SideNavContainer = styled.div`

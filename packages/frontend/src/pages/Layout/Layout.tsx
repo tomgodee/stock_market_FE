@@ -4,11 +4,15 @@ import { useHistory, Switch, Route, Redirect } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { selectUser, verifyToken } from '../../reducers/user';
 import {
-  LOGIN_PATH, PROFILE_PATH,
+  LOGIN_PATH, MARKET_PATH, PROFILE_PATH, SECTOR_PATH,
+  SECTOR_DETAILS_PATH, COMPANY_DETAILS_PATH, COMPANY_PATH,
 } from '../../config/paths';
 import { ACCESS_TOKEN } from '../../config/localStorage';
-
+import Market from '../Market';
 import Profile from '../Profile';
+import Sector from '../Sector';
+import SectorDetails from '../SectorDetails';
+import PrivateRoute from '../../components/PrivateRoute';
 import {
   HeaderAccountCircle as AccountCircle,
   Header,
@@ -24,10 +28,8 @@ import {
 import {
   Text,
 } from '../../components/Common/styles';
-// import authenticationService from '../../services/authentication';
-// import { logo } from '../../assets';
 
-const Dashboard = () => {
+const Layout = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
@@ -57,10 +59,9 @@ const Dashboard = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
     if (!accessToken) {
-      console.log('accessToken', accessToken);
       history.push(LOGIN_PATH);
     } else {
-      dispatch(verifyToken(accessToken));
+      dispatch(verifyToken());
     }
   }, []);
 
@@ -103,9 +104,14 @@ const Dashboard = () => {
       <FlexContainer>
         <ContentContainer>
           <Switch>
-            <Route path={`${PROFILE_PATH}/:id`} component={Profile} />
+            <PrivateRoute path={`${PROFILE_PATH}/:id`} component={Profile} />
+            <PrivateRoute path={`${SECTOR_DETAILS_PATH}`} component={SectorDetails} />
+            <PrivateRoute path={`${SECTOR_PATH}`} component={Sector} />
+            <PrivateRoute path={`${COMPANY_DETAILS_PATH}`} component={SectorDetails} />
+            <PrivateRoute path={`${COMPANY_PATH}`} component={Sector} />
+            <PrivateRoute path={`${MARKET_PATH}`} component={Market} />
             <Route path="/*">
-              <Redirect to={PROFILE_PATH} />
+              <Redirect to={MARKET_PATH} />
             </Route>
           </Switch>
         </ContentContainer>
@@ -115,4 +121,4 @@ const Dashboard = () => {
   );
 };
 
-export default React.memo(Dashboard);
+export default React.memo(Layout);

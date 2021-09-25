@@ -9,7 +9,7 @@ export const login = createAsyncThunk(`${AUTHENTICATION_URL}/login`, async (data
   });
 });
 
-export const verifyToken = createAsyncThunk(`${AUTHENTICATION_URL}/verifyToken`, async (token: string) => {
-  const response = await authenticationService.verifyToken(token);
+export const verifyToken = createAsyncThunk(`${AUTHENTICATION_URL}/verifyToken`, async () => {
+  const response = await authenticationService.verifyToken();
   return response.data;
 });

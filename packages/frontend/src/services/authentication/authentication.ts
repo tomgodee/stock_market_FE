@@ -7,7 +7,7 @@ function login(data: LoginForm): any {
   return baseService.post(`${BASE_URL}/login`, data);
 }
 
-function verifyToken(token: string): any {
+function verifyToken(): any {
   return baseService.get(`${BASE_URL}/verify`);
 }
 
