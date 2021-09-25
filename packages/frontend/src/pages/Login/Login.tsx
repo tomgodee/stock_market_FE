@@ -4,12 +4,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { ROOMLIST_PATH } from '../../config/paths';
 import { ACCESS_TOKEN } from '../../config/localStorage';
-import { LOADING } from '../../config/status';
 import { selectUser, login } from '../../reducers/user';
 import {
   LoginContainer as Container,
-  LoginContainerGrid as ContainerGrid,
-  LoginItemGrid as ItemGrid,
+  ItemGrid,
   LoginButton as Button,
   LoginTextField as TextField,
   LoginForm as Form,
@@ -48,64 +46,62 @@ const Login = () => {
 
   return (
     <Container>
-      <ContainerGrid container>
-        <ItemGrid item xs={12} md={5}>
-          <Form onSubmit={handleSubmit(submitHandler)} $flex $directionColumn>
-            <Controller
-              rules={BASIC_INPUT_VALIDATION}
-              name={USERNAME}
-              control={control}
-              render={({ field, fieldState }) => {
-                const error = fieldState.invalid || Boolean(user.error);
-                return (
-                  <TextField
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value.trim())}
-                    onBlur={field.onBlur}
-                    inputRef={field.ref}
-                    error={error}
-                    autoFocus
-                    color="primary"
-                    label={field.name}
-                    id={field.name}
-                    name={field.name}
-                    required
-                    type="text"
-                    variant="outlined"
-                    helperText={error ? 'Incorrect input' : ''}
-                  />
-                );
-              }}
-            />
-            <Controller
-              rules={BASIC_INPUT_VALIDATION}
-              name={PASSWORD}
-              control={control}
-              render={({ field, fieldState }) => {
-                const error = fieldState.invalid || Boolean(user.error);
-                return (
-                  <TextField
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value.trim())}
-                    onBlur={field.onBlur}
-                    inputRef={field.ref}
-                    error={error}
-                    color="primary"
-                    label={field.name}
-                    id={field.name}
-                    name={field.name}
-                    required
-                    type="password"
-                    variant="outlined"
-                    helperText={error ? 'Incorrect input' : ''}
-                  />
-                );
-              }}
-            />
-            <Button type="submit" disabled={!isValid} variant="contained" color="primary">Log in</Button>
-          </Form>
-        </ItemGrid>
-      </ContainerGrid>
+      <ItemGrid item xs={12} md={5}>
+        <Form onSubmit={handleSubmit(submitHandler)} $flex $directionColumn>
+          <Controller
+            rules={BASIC_INPUT_VALIDATION}
+            name={USERNAME}
+            control={control}
+            render={({ field, fieldState }) => {
+              const error = fieldState.invalid || Boolean(user.error);
+              return (
+                <TextField
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value.trim())}
+                  onBlur={field.onBlur}
+                  inputRef={field.ref}
+                  error={error}
+                  autoFocus
+                  color="primary"
+                  label={field.name}
+                  id={field.name}
+                  name={field.name}
+                  required
+                  type="text"
+                  variant="outlined"
+                  helperText={error ? 'Incorrect input' : ''}
+                />
+              );
+            }}
+          />
+          <Controller
+            rules={BASIC_INPUT_VALIDATION}
+            name={PASSWORD}
+            control={control}
+            render={({ field, fieldState }) => {
+              const error = fieldState.invalid || Boolean(user.error);
+              return (
+                <TextField
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value.trim())}
+                  onBlur={field.onBlur}
+                  inputRef={field.ref}
+                  error={error}
+                  color="primary"
+                  label={field.name}
+                  id={field.name}
+                  name={field.name}
+                  required
+                  type="password"
+                  variant="outlined"
+                  helperText={error ? 'Incorrect input' : ''}
+                />
+              );
+            }}
+          />
+          <Button type="submit" disabled={!isValid} variant="contained" color="primary">Log in</Button>
+        </Form>
+      </ItemGrid>
     </Container>
   );
 };

@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import {
   Container, Grid, Button,
-  Card, CardContent, CardMedia,
   TextField, Backdrop, CircularProgress,
 } from '@material-ui/core';
-import { prussianBlue, rose } from '../../themes/colors';
+import { green, rose, white } from '../../themes/colors';
 
 interface LoginItemGridProps {
   $flex?: boolean;
@@ -17,20 +16,14 @@ export const LoginContainer = styled(Container)`
   height: 100vh;
 `;
 
-export const LoginContainerGrid = styled(Grid)`
+export const ItemGrid = styled(Grid)`
   justify-content: center;
   align-items: center;
   align-self: center;
-  width: 80%;
-  height: 585px;
-  border: 2px solid ${prussianBlue};
+  height: 360px;
+  border: 2px solid ${green};
   border-radius: 5px;
-`;
-
-export const LoginItemGrid = styled(Grid)<LoginItemGridProps>`
-  // @media (max-width: 960px) {
-  //   display: none;
-  // }
+  background-color: ${white};
 `;
 
 export const LoginForm = styled.form<LoginItemGridProps>`
@@ -43,6 +36,7 @@ export const LoginForm = styled.form<LoginItemGridProps>`
 
 export const LoginButton = styled(Button)`
   align-self: center;
+  margin-top: 18px;
 `;
 
 export const LoginTextField = styled(TextField)`
