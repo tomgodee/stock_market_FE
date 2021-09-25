@@ -8,11 +8,7 @@ function login(data: LoginForm): any {
 }
 
 function verifyToken(token: string): any {
-  return baseService.get(`${BASE_URL}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return baseService.get(`${BASE_URL}/verify`);
 }
 
 export default {

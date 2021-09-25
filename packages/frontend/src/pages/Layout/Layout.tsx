@@ -57,6 +57,7 @@ const Dashboard = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
     if (!accessToken) {
+      console.log('accessToken', accessToken);
       history.push(LOGIN_PATH);
     } else {
       dispatch(verifyToken(accessToken));

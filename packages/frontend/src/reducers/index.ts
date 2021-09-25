@@ -2,11 +2,7 @@ import { combineReducers } from 'redux';
 import user from './user';
 
 const reduxRootReducer = combineReducers({
-  user,
+  user: user.userReducer,
 });
-
-export {
-  user,
-};
 
 export default reduxRootReducer;

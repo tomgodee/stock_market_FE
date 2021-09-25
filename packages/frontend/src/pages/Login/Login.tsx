@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { ROOMLIST_PATH } from '../../config/paths';
+import { MARKET_PATH } from '../../config/paths';
 import { ACCESS_TOKEN } from '../../config/localStorage';
 import { selectUser, login } from '../../reducers/user';
 import {
@@ -12,7 +12,7 @@ import {
   LoginTextField as TextField,
   LoginForm as Form,
 } from './styles';
-import { LoginForm } from '../../types/user';
+import type { LoginForm } from '../../types/user';
 import { BASIC_INPUT_VALIDATION } from '../../utils/formValidator';
 
 const USERNAME = 'username';
@@ -23,7 +23,7 @@ const Login = () => {
   const history = useHistory();
   const user = useAppSelector(selectUser);
 
-  const { handleSubmit, trigger, control, formState: { errors, isValid } } = useForm<LoginForm>({
+  const { handleSubmit, control, formState: { isValid } } = useForm<LoginForm>({
     defaultValues: {
       [USERNAME]: '',
       [PASSWORD]: '',
@@ -40,7 +40,7 @@ const Login = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
     if (accessToken) {
-      history.push(ROOMLIST_PATH);
+      history.push(MARKET_PATH);
     }
   }, [user]);
 
@@ -53,7 +53,7 @@ const Login = () => {
             name={USERNAME}
             control={control}
             render={({ field, fieldState }) => {
-              const error = fieldState.invalid || Boolean(user.error);
+              const error = fieldState.invalid;
               return (
                 <TextField
                   value={field.value}
@@ -79,7 +79,7 @@ const Login = () => {
             name={PASSWORD}
             control={control}
             render={({ field, fieldState }) => {
-              const error = fieldState.invalid || Boolean(user.error);
+              const error = fieldState.invalid;
               return (
                 <TextField
                   value={field.value}
