@@ -4,32 +4,31 @@ import {
   Grid,
 } from '@material-ui/core';
 import {
-  SectorDetailsContainer,
+  SectorContainer,
 } from './styles';
 import { Text, Card } from '../../components/Common/styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getOne, selectSector } from '../../reducers/sector';
-import { SECTOR_PATH } from '../../config/paths';
+import { getAll, selectCompanyState } from '../../reducers/company';
+import { COMPANY_PATH } from '../../config/paths';
 
-const SectorDetails = () => {
-  const params = useParams<{sectorId: string}>();
+const Company = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const sectorState = useAppSelector(selectSector);
+  const companyState = useAppSelector(selectCompanyState);
 
   useEffect(() => {
-    dispatch(getOne(Number(params.sectorId)));
+    dispatch(getAll());
   }, []);
 
-  const handleClick = useCallback((sectorId: number) => {
-    history.push(`${SECTOR_PATH}/${sectorId}`);
+  const handleClick = useCallback((companyId: number) => {
+    history.push(`${COMPANY_PATH}/${companyId}`);
   }, []);
 
   return (
-    <SectorDetailsContainer maxWidth={false}>
-      This is sector details
+    <SectorContainer maxWidth={false}>
+      This is company
       <Grid container spacing={6}>
-        {sectorState.selectedSector.companies.map((company) => {
+        {companyState.companies.map((company) => {
           return (
             <Grid item xs={12} sm={6} md={4} lg={3} key={company.id}>
               <Card onClick={() => handleClick(company.id)}>
@@ -39,8 +38,8 @@ const SectorDetails = () => {
           );
         })}
       </Grid>
-    </SectorDetailsContainer>
+    </SectorContainer>
   );
 };
 
-export default React.memo(SectorDetails);
+export default React.memo(Company);

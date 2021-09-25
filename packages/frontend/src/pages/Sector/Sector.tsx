@@ -5,9 +5,8 @@ import {
 } from '@material-ui/core';
 import {
   SectorContainer,
-  SectorContent,
 } from './styles';
-import { Text } from '../../components/Common/styles';
+import { Text, Card } from '../../components/Common/styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getAll, selectSector } from '../../reducers/sector';
 import { SECTOR_PATH } from '../../config/paths';
@@ -32,9 +31,9 @@ const Sector = () => {
         {sectorState.sectors.map((sector) => {
           return (
             <Grid item xs={12} sm={6} md={4} lg={3} key={sector.id}>
-              <SectorContent onClick={() => handleClick(sector.id)}>
+              <Card onClick={() => handleClick(sector.id)}>
                 <Text style={{ fontSize: 24 }}>{sector.name}</Text>
-              </SectorContent>
+              </Card>
             </Grid>
           );
         })}

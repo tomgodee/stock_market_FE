@@ -5,9 +5,8 @@ import {
 } from '@material-ui/core';
 import {
   MarketContainer,
-  SectorContent,
 } from './styles';
-import { Text } from '../../components/Common/styles';
+import { Text, Card } from '../../components/Common/styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getAll, selectSector } from '../../reducers/sector';
 
@@ -25,13 +24,14 @@ const Market = () => {
 
   return (
     <MarketContainer maxWidth={false}>
+      This is market
       <Grid container spacing={6}>
         {sectorState.sectors.map((sector) => {
           return (
             <Grid item xs={12} sm={6} md={4} lg={3} key={sector.id}>
-              <SectorContent onClick={() => handleClick(sector.id)}>
+              <Card onClick={() => handleClick(sector.id)}>
                 <Text style={{ fontSize: 24 }}>{sector.name}</Text>
-              </SectorContent>
+              </Card>
             </Grid>
           );
         })}

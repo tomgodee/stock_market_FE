@@ -12,6 +12,8 @@ import Market from '../Market';
 import Profile from '../Profile';
 import Sector from '../Sector';
 import SectorDetails from '../SectorDetails';
+import Company from '../Company';
+import CompanyDetails from '../CompanyDetails';
 import PrivateRoute from '../../components/PrivateRoute';
 import {
   HeaderAccountCircle as AccountCircle,
@@ -107,8 +109,8 @@ const Layout = () => {
             <PrivateRoute path={`${PROFILE_PATH}/:id`} component={Profile} />
             <PrivateRoute path={`${SECTOR_DETAILS_PATH}`} component={SectorDetails} />
             <PrivateRoute path={`${SECTOR_PATH}`} component={Sector} />
-            <PrivateRoute path={`${COMPANY_DETAILS_PATH}`} component={SectorDetails} />
-            <PrivateRoute path={`${COMPANY_PATH}`} component={Sector} />
+            <PrivateRoute path={`${COMPANY_DETAILS_PATH}`} component={CompanyDetails} />
+            <PrivateRoute path={`${COMPANY_PATH}`} component={Company} />
             <PrivateRoute path={`${MARKET_PATH}`} component={Market} />
             <Route path="/*">
               <Redirect to={MARKET_PATH} />
