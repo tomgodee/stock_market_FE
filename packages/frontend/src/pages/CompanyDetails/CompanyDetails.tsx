@@ -27,7 +27,7 @@ const CompanyDetails = () => {
 
   return (
     <SectorContainer maxWidth={false}>
-      This is CompanyDetails
+      This is CompanyDetailss
       <Grid container spacing={6}>
         <Grid item xs={12} sm={6}>
           <Card>
