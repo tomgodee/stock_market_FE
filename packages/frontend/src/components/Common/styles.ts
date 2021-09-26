@@ -13,7 +13,7 @@ export const DefaultButton = styled(Button)`
 export const Text = styled(Typography)`
   font-size: 16px;
   font-weight: 400;
-`;
+` as typeof Typography;
 
 export const Card = styled(CardContent)`
   display: flex;
