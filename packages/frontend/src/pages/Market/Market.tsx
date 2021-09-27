@@ -1,5 +1,7 @@
+/* eslint-disable no-param-reassign */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import {
   Grid,
 } from '@material-ui/core';
@@ -11,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getAll, selectCompanyState } from '../../reducers/company';
 import { SECTOR_PATH, COMPANY_PATH } from '../../config/paths';
 import CompanyCheckBox from '../../components/CompanyCheckBox';
+import { green } from '../../themes/colors';
 
 const Market = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +21,11 @@ const Market = () => {
   const companyState = useAppSelector(selectCompanyState);
 
   const [isSelected, setIsSelected] = useState<boolean[]>([false]);
+  const [data, setData] = useState<any[]>([
+    { name: 'Page A', Orange: 900 },
+    { name: 'Page B', Orange: 100 },
+    { name: 'Page C', Orange: 400 },
+  ]);
 
   useEffect(() => {
     dispatch(getAll());
@@ -36,6 +44,12 @@ const Market = () => {
     const newState = isSelected.slice();
     newState[index] = !newState[index];
     setIsSelected(newState);
+
+    const newDataState = data.map((item, itemIndex) => {
+      item[companyState.companies[index].name] = 100 * (itemIndex + 4);
+      return item;
+    });
+    setData(newDataState);
   }, [isSelected]);
 
   return (
@@ -68,7 +82,15 @@ const Market = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} md={8} lg={9}>
-          Chart
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <Line type="monotone" dataKey="Orange" strokeWidth={4} stroke={green} />
+              <Line type="monotone" dataKey="Samsing" strokeWidth={4} stroke={green} />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+            </LineChart>
+          </ResponsiveContainer>
         </Grid>
       </Grid>
     </MarketContainer>

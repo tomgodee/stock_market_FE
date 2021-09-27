@@ -1,17 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import {
-  Grid,
   Checkbox,
 } from '@material-ui/core';
 import {
-  CompanyCheckBoxContainer,
   CompanyGrid,
 } from './styles';
 import { Text } from '../Common/styles';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getAll, selectCompanyState } from '../../reducers/company';
-import { COMPANY_PATH } from '../../config/paths';
+import { useAppDispatch } from '../../store/hooks';
 import { Company } from '../../types/company';
 
 interface CompanyCheckBoxProps {
@@ -22,12 +17,7 @@ interface CompanyCheckBoxProps {
 }
 
 const CompanyCheckBox = (props: CompanyCheckBoxProps) => {
-  const history = useHistory();
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getAll());
-  }, []);
 
   return (
     <CompanyGrid item xs={12}>
