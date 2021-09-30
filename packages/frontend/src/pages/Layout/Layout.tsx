@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Switch, Route, Redirect } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
-import { selectUser, verifyToken } from '../../reducers/user';
+import { selectUserState, verifyToken } from '../../reducers/user';
 import {
   LOGIN_PATH, MARKET_PATH, PROFILE_PATH, SECTOR_PATH,
   SECTOR_DETAILS_PATH, COMPANY_DETAILS_PATH, COMPANY_PATH,
@@ -34,7 +34,7 @@ import {
 const Layout = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useAppSelector(selectUser);
+  const user = useAppSelector(selectUserState);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

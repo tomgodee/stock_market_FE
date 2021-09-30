@@ -7,6 +7,7 @@ interface Profile {
   id: number;
   name: string;
   role: string;
+  money: number;
 }
 
 export type {

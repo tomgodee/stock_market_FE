@@ -1,7 +1,10 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
+  PieChart, Pie,
+} from 'recharts';
 import {
   Grid,
 } from '@material-ui/core';
@@ -11,20 +14,45 @@ import {
 import { Text, Card } from '../../components/Common/styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getAll, selectCompanyState } from '../../reducers/company';
+import { selectUserState } from '../../reducers/user';
 import { SECTOR_PATH, COMPANY_PATH } from '../../config/paths';
 import CompanyCheckBox from '../../components/CompanyCheckBox';
-import { green } from '../../themes/colors';
+import { green, salmon } from '../../themes/colors';
 
 const Market = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const companyState = useAppSelector(selectCompanyState);
+  const userState = useAppSelector(selectUserState);
 
   const [isSelected, setIsSelected] = useState<boolean[]>([false]);
   const [data, setData] = useState<any[]>([
     { name: 'Page A', Orange: 900 },
     { name: 'Page B', Orange: 100 },
     { name: 'Page C', Orange: 400 },
+  ]);
+
+  const [pieData] = useState([
+    [
+      {
+        name: 'Group A',
+        value: 400,
+      },
+      {
+        name: 'Group B',
+        value: 1500,
+      },
+    ],
+    [
+      {
+        name: 'Group A',
+        value: 2400,
+      },
+      {
+        name: 'Group B',
+        value: 4567,
+      },
+    ],
   ]);
 
   useEffect(() => {
@@ -64,6 +92,19 @@ const Market = () => {
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Card onClick={() => handleClickHeader(COMPANY_PATH)}>
             <Text style={{ fontSize: 24 }}>Companies</Text>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Card style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 24 }}>Account</Text>
+            <Text style={{ fontSize: 24 }}>{userState.money}</Text>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Card>
+            <PieChart width={730} height={250}>
+              <Pie data={pieData[1]} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={50} outerRadius={80} fill={salmon} label />
+            </PieChart>
           </Card>
         </Grid>
       </Grid>

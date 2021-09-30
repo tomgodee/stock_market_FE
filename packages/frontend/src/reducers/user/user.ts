@@ -17,10 +17,11 @@ const initialState: Profile = {
   id: 0,
   name: '',
   role: '',
+  money: 100000,
 };
 
 export const slice = createSlice({
-  name: 'user',
+  name: 'userState',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -47,6 +48,6 @@ export const slice = createSlice({
   },
 });
 
-export const selectUser = (state: any): Profile => state.user;
+export const selectUserState = (state: any): Profile => state.user;
 
 export default slice.reducer;

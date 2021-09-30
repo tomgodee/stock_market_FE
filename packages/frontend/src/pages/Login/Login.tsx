@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { MARKET_PATH } from '../../config/paths';
 import { ACCESS_TOKEN } from '../../config/localStorage';
-import { selectUser, login } from '../../reducers/user';
+import { selectUserState, login } from '../../reducers/user';
 import {
   LoginContainer as Container,
   ItemGrid,
@@ -21,7 +21,7 @@ const PASSWORD = 'password';
 const Login = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const user = useAppSelector(selectUser);
+  const user = useAppSelector(selectUserState);
 
   const { handleSubmit, control, formState: { isValid } } = useForm<LoginForm>({
     defaultValues: {

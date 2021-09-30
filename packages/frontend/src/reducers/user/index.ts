@@ -1,8 +1,8 @@
-import userReducer, { selectUser } from './user';
+import userReducer, { selectUserState } from './user';
 import { login, verifyToken } from './thunks';
 
 export {
-  selectUser,
+  selectUserState,
   login,
   verifyToken,
 };
