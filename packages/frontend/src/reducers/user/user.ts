@@ -1,5 +1,6 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { Profile } from '../../types/user';
+import type { Profile, Purchase } from '../../types/user';
 import { ACCESS_TOKEN } from '../../config/localStorage';
 import { LOGIN_PATH } from '../../config/paths';
 import {
@@ -18,12 +19,34 @@ const initialState: Profile = {
   name: '',
   role: '',
   money: 100000,
+  stocks: [],
 };
 
 export const slice = createSlice({
   name: 'userState',
   initialState,
-  reducers: {},
+  reducers: {
+    buyStock: (state, action: PayloadAction<Purchase>) => {
+      const { payload } = action;
+      state.money -= payload.worth;
+      const stockIndex = state.stocks.findIndex((stock) => stock.ticker === payload.stock.ticker);
+      if (stockIndex !== -1) {
+        state.stocks[stockIndex].amount += payload.stock.amount;
+      } else {
+        state.stocks.push(payload.stock);
+      }
+    },
+    sellStock: (state, action: PayloadAction<Purchase>) => {
+      const { payload } = action;
+      state.money += payload.worth;
+      const stockIndex = state.stocks.findIndex((stock) => stock.ticker === payload.stock.ticker);
+      if (stockIndex !== -1) {
+        state.stocks[stockIndex].amount -= payload.stock.amount;
+      } else {
+        state.stocks.splice(stockIndex, 1);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {});
     builder.addCase(login.fulfilled, (state, action) => {
@@ -48,6 +71,13 @@ export const slice = createSlice({
   },
 });
 
+const { actions, reducer } = slice;
+
+export const {
+  buyStock,
+  sellStock,
+} = actions;
+
 export const selectUserState = (state: any): Profile => state.user;
 
-export default slice.reducer;
+export default reducer;

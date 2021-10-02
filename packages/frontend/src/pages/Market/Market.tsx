@@ -1,6 +1,5 @@
-/* eslint-disable no-param-reassign */
 import React, { useState, useEffect, useCallback } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie,
@@ -74,6 +73,7 @@ const Market = () => {
     setIsSelected(newState);
 
     const newDataState = data.map((item, itemIndex) => {
+      // eslint-disable-next-line no-param-reassign
       item[companyState.companies[index].name] = 100 * (itemIndex + 4);
       return item;
     });
@@ -96,8 +96,8 @@ const Market = () => {
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Card style={{ flexDirection: 'column' }}>
-            <Text style={{ fontSize: 24 }}>Account</Text>
-            <Text style={{ fontSize: 24 }}>{userState.money}</Text>
+            <Text style={{ fontSize: 24 }}>Budget</Text>
+            <Text style={{ fontSize: 24 }}>${userState.money}</Text>
           </Card>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>

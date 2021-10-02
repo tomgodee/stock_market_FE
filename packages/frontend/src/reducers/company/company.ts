@@ -9,12 +9,14 @@ const initialState: CompanyState = {
   companies: [{
     id: 0,
     name: '',
+    ticker: '',
     description: '',
     stock_price: 0,
   }],
   selectedCompany: {
     id: 0,
     name: '',
+    ticker: '',
     description: '',
     stock_price: 0,
   },

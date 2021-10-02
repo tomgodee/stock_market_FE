@@ -1,8 +1,14 @@
-import userReducer, { selectUserState } from './user';
+import userReducer, {
+  selectUserState,
+  buyStock,
+  sellStock,
+} from './user';
 import { login, verifyToken } from './thunks';
 
 export {
   selectUserState,
+  buyStock,
+  sellStock,
   login,
   verifyToken,
 };
