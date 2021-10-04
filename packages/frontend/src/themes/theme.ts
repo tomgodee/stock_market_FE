@@ -5,7 +5,7 @@ import {
   PaletteColorOptions,
 } from '@material-ui/core';
 import orange from '@material-ui/core/colors/orange';
-import { green, rose, red, mintCream } from './colors';
+import { green, rose, salmon, mintCream } from './colors';
 
 const primary = {
   main: green,
@@ -13,7 +13,7 @@ const primary = {
 };
 
 const secondary = {
-  main: red,
+  main: salmon,
   constrastText: mintCream,
 };
 

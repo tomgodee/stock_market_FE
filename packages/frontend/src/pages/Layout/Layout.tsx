@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Switch, Route, Redirect } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import { useAppSelector } from '../../store/hooks';
 import { selectUserState, verifyToken } from '../../reducers/user';
 import {
@@ -25,11 +26,8 @@ import {
   HeaderIconButton as IconButton,
   HeaderMenu,
   HeaderMenuItem,
-  HeaderMenuIcon,
+  NextButton,
 } from './styles';
-import {
-  Text,
-} from '../../components/Common/styles';
 
 const Layout = () => {
   const history = useHistory();
@@ -71,11 +69,6 @@ const Layout = () => {
     <>
       <Header>
         <Toolbar>
-          <IconButton>
-            <HeaderMenuIcon />
-          </IconButton>
-          <Text>Pokermon</Text>
-
           <HeaderProfileContainer>
             <IconButton
               onClick={handleProfileMenuOpen}
@@ -99,7 +92,14 @@ const Layout = () => {
               <HeaderMenuItem onClick={goToProfile}>My profile</HeaderMenuItem>
               <HeaderMenuItem onClick={logout}>Log out</HeaderMenuItem>
             </HeaderMenu>
+
           </HeaderProfileContainer>
+          <NextButton
+            variant="contained"
+            color="secondary"
+          >
+            Next quarter
+          </NextButton>
         </Toolbar>
       </Header>
 

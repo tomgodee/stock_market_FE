@@ -8,7 +8,6 @@ import {
   MenuItem,
   Toolbar,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { prussianBlue, white } from '../../themes/colors';
 
@@ -60,17 +59,18 @@ export const HeaderMenu = styled(Menu)`
 export const HeaderMenuItem = styled(MenuItem)`
 `;
 
-export const HeaderMenuIcon = styled(MenuIcon)`
-  color: ${white};
-`;
-
 export const HeaderIconButton = styled(IconButton)`
   color: ${white};
 `;
 
 export const HeaderToolbar = styled(Toolbar)`
+  padding-right: 0;
 `;
 
 export const HeaderProfileContainer = styled.div`
+`;
+
+export const NextButton = styled(Button)`
   margin-left: auto;
+  align-self: stretch;
 `;
