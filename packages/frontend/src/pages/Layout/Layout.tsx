@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Switch, Route, Redirect } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { selectUserState, verifyToken } from '../../reducers/user';
 import { getAllWithProfit } from '../../reducers/company';
+import { sendScore } from '../../reducers/score';
 import {
   LOGIN_PATH, MARKET_PATH, PROFILE_PATH, SECTOR_PATH,
   SECTOR_DETAILS_PATH, COMPANY_DETAILS_PATH, COMPANY_PATH,
@@ -32,9 +33,15 @@ import {
 const Layout = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useAppSelector(selectUserState);
+  const userState = useAppSelector(selectUserState);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const [quarter, setQuarter] = useState(0);
+
+  const isGameOver = useMemo(() => {
+    return quarter >= 4;
+  }, [quarter]);
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -47,7 +54,7 @@ const Layout = () => {
   };
 
   const goToProfile = () => {
-    history.push(`${PROFILE_PATH}/${user.id}`);
+    history.push(`${PROFILE_PATH}/${userState.id}`);
   };
 
   const logout = () => {
@@ -57,7 +64,15 @@ const Layout = () => {
   };
 
   const nextQuarter = () => {
-    dispatch(getAllWithProfit());
+    if (!isGameOver) {
+      dispatch(getAllWithProfit());
+      setQuarter((prevState) => prevState + 1);
+    } else {
+      dispatch(sendScore({
+        score: 3000,
+        userId: userState.id,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -103,7 +118,7 @@ const Layout = () => {
             color="secondary"
             onClick={nextQuarter}
           >
-            Next quarter
+            {isGameOver ? 'END GAME' : 'NEXT QUARTER'}
           </NextButton>
         </Toolbar>
       </Header>

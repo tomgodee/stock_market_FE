@@ -7,12 +7,6 @@ import {
   login,
   verifyToken,
 } from './thunks';
-// import {
-//   LOADING,
-//   IDLE,
-//   SUCCEEDED,
-//   FAILED,
-// } from '../config/status';
 
 const initialState: Profile = {
   id: 0,
