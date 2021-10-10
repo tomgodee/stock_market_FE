@@ -1,9 +1,10 @@
 /* eslint-disable no-shadow */
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
+import { last } from 'lodash';
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Label, LabelList,
+  PieChart, Pie, Label, LabelList, Cell,
 } from 'recharts';
 import {
   Grid,
@@ -19,6 +20,34 @@ import { SECTOR_PATH, COMPANY_PATH } from '../../config/paths';
 import CompanyCheckBox from '../../components/CompanyCheckBox';
 import { green, rose, purple, salmon, prussianBlue, yellow, orange } from '../../themes/colors';
 
+const RADIAN = Math.PI / 180;
+
+const CustomizedLabel = ({
+  cx,
+  cy,
+  midAngle,
+  innerRadius,
+  outerRadius,
+  percent,
+  index,
+}: any) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="white"
+      textAnchor={x > cx ? 'start' : 'end'}
+      dominantBaseline="central"
+    >
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
+
 const Market = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
@@ -27,28 +56,7 @@ const Market = () => {
 
   const [isSelected, setIsSelected] = useState<boolean[]>([false]);
 
-  const [pieData] = useState([
-    [
-      {
-        name: 'Group A',
-        value: 400,
-      },
-      {
-        name: 'Group B',
-        value: 1500,
-      },
-    ],
-    [
-      {
-        name: 'Group A',
-        value: 2400,
-      },
-      {
-        name: 'Group B',
-        value: 4567,
-      },
-    ],
-  ]);
+  const chartColors = [green, rose, purple, salmon, prussianBlue, yellow, orange];
 
   const lineData = useMemo(() => {
     // eslint-disable-next-line prefer-destructuring
@@ -64,7 +72,15 @@ const Market = () => {
     return data;
   }, [companyState.companies]);
 
-  const chartColors = [green, rose, purple, salmon, prussianBlue, yellow, orange];
+  const pieData = useMemo(() => {
+    return userState.stocks.map((stock) => {
+      const company = companyState.companies.find((company) => company.ticker === stock.ticker);
+      const price: number = last(company?.stock_price) || 1;
+      const pieSlice = { ...stock };
+      pieSlice.value = Number((stock.amount * price).toFixed(2));
+      return pieSlice;
+    });
+  }, [userState.stocks]);
 
   useEffect(() => {
     if (companyState.companies.length < 2) {
@@ -108,11 +124,22 @@ const Market = () => {
           </Card>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Card>
-            <PieChart width={730} height={250}>
-              <Pie data={pieData[1]} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={50} outerRadius={80} fill={salmon} label />
-            </PieChart>
-          </Card>
+          <PieChart width={400} height={250}>
+            <Pie
+              data={pieData}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              labelLine={false}
+              label={<CustomizedLabel />}
+            >
+              {pieData.map((entry, index) => (
+                <Cell key={entry.ticker} fill={chartColors[index % chartColors.length]} />
+              ))}
+            </Pie>
+          </PieChart>
         </Grid>
       </Grid>
 

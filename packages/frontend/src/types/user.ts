@@ -7,6 +7,7 @@ interface Stock {
   name: string;
   ticker: string;
   amount: number;
+  value?: number;
 }
 
 interface Profile {
