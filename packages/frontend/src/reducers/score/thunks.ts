@@ -7,3 +7,8 @@ export const sendScore = createAsyncThunk(`${SCORE_URL}/sendScore`, async (data:
   const response = await scoreService.sendScore(data);
   return response.data;
 });
+
+export const getTopScores = createAsyncThunk(`${SCORE_URL}/getTopScores`, async () => {
+  const response = await scoreService.getTopScores();
+  return response.data;
+});

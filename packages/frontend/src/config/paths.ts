@@ -5,6 +5,7 @@ export const COMPANY_PATH = '/company';
 export const COMPANY_DETAILS_PATH = '/company/:companyId';
 export const LOGIN_PATH = '/login';
 export const PROFILE_PATH = '/profile';
+export const LEADERBOARD_PATH = '/leaderboard';
 
 export default {
   MARKET_PATH,
@@ -14,4 +15,5 @@ export default {
   COMPANY_DETAILS_PATH,
   LOGIN_PATH,
   PROFILE_PATH,
+  LEADERBOARD_PATH,
 };

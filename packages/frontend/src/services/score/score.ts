@@ -7,6 +7,11 @@ function sendScore(data: ScorePayload): any {
   return baseService.post(`${BASE_URL}`, data);
 }
 
+function getTopScores(): any {
+  return baseService.get(`${BASE_URL}`);
+}
+
 export default {
   sendScore,
+  getTopScores,
 };

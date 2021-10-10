@@ -7,7 +7,7 @@ import { companyReducer } from '../reducers/company';
 const store = configureStore({
   reducer: {
     user: user.userReducer,
-    score: score.scoreReducer,
+    scoreState: score.scoreReducer,
     sectorState: sectorReducer,
     companyState: companyReducer,
   },

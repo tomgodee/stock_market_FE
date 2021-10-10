@@ -1,25 +1,36 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { Score, ScorePayload } from '../../types/score';
+import type { ScoreState, ScorePayload } from '../../types/score';
 import {
   sendScore,
+  getTopScores,
 } from './thunks';
 
-const initialState: Score = {
+const initialState: ScoreState = {
   score: 0,
+  topScores: [{
+    score: 0,
+    user: {
+      name: '',
+    },
+  }],
 };
 
 export const slice = createSlice({
-  name: 'userState',
+  name: 'scoreState',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(sendScore.pending, (state) => {});
     builder.addCase(sendScore.fulfilled, (state, action: PayloadAction<ScorePayload>) => {
       const { payload } = action;
-      console.log('payload', payload);
     });
     builder.addCase(sendScore.rejected, (state, action) => {});
+    builder.addCase(getTopScores.pending, (state) => {});
+    builder.addCase(getTopScores.fulfilled, (state, action: PayloadAction<any>) => {
+      const { payload } = action;
+      state.topScores = payload;
+    });
+    builder.addCase(getTopScores.rejected, (state, action) => {});
   },
 });
 
@@ -27,6 +38,6 @@ const { actions, reducer } = slice;
 
 // export const {} = actions;
 
-export const selectScoreState = (state: any): Score => state.score;
+export const selectScoreState = (state: any): ScoreState => state.scoreState;
 
 export default reducer;

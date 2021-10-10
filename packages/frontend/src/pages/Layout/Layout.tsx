@@ -9,6 +9,7 @@ import { sendScore } from '../../reducers/score';
 import {
   LOGIN_PATH, MARKET_PATH, PROFILE_PATH, SECTOR_PATH,
   SECTOR_DETAILS_PATH, COMPANY_DETAILS_PATH, COMPANY_PATH,
+  LEADERBOARD_PATH,
 } from '../../config/paths';
 import { ACCESS_TOKEN } from '../../config/localStorage';
 import Market from '../Market';
@@ -17,6 +18,7 @@ import Sector from '../Sector';
 import SectorDetails from '../SectorDetails';
 import Company from '../Company';
 import CompanyDetails from '../CompanyDetails';
+import Leaderboard from '../Leaderboard';
 import PrivateRoute from '../../components/PrivateRoute';
 import {
   HeaderAccountCircle as AccountCircle,
@@ -138,6 +140,7 @@ const Layout = () => {
             <PrivateRoute path={`${COMPANY_DETAILS_PATH}`} component={CompanyDetails} />
             <PrivateRoute path={`${COMPANY_PATH}`} component={Company} />
             <PrivateRoute path={`${MARKET_PATH}`} component={Market} />
+            <PrivateRoute path={`${LEADERBOARD_PATH}`} component={Leaderboard} />
             <Route path="/*">
               <Redirect to={MARKET_PATH} />
             </Route>
