@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Switch, Route, Redirect } from 'react-router-dom';
+import { last } from 'lodash';
 import { useAppSelector } from '../../store/hooks';
 import { selectUserState, verifyToken } from '../../reducers/user';
-import { getAllWithProfit } from '../../reducers/company';
+import { getAllWithProfit, selectCompanyState } from '../../reducers/company';
 import { sendScore } from '../../reducers/score';
 import {
   LOGIN_PATH, MARKET_PATH, PROFILE_PATH, SECTOR_PATH,
@@ -34,6 +35,7 @@ const Layout = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const userState = useAppSelector(selectUserState);
+  const companyState = useAppSelector(selectCompanyState);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -68,8 +70,12 @@ const Layout = () => {
       dispatch(getAllWithProfit());
       setQuarter((prevState) => prevState + 1);
     } else {
+      const score = userState.stocks.map((stock) => {
+        const stock_price = companyState.companies.find((company) => company.ticker === stock.ticker)?.stock_price;
+        return Number((stock.amount * (last(stock_price)!)).toFixed(2));
+      });
       dispatch(sendScore({
-        score: 3000,
+        score: score.reduce((prevValue, entry) => prevValue + entry, 0) + userState.money,
         userId: userState.id,
       }));
     }
