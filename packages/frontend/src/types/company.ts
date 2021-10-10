@@ -3,7 +3,8 @@ interface Company {
   name: string;
   ticker: string;
   description: string;
-  stock_price: number;
+  stock_price: number[];
+  profit: number[];
 }
 
 interface CompanyState {

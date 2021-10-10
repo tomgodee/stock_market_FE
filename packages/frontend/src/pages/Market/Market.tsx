@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+/* eslint-disable no-shadow */
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
-  PieChart, Pie,
+  PieChart, Pie, Label, LabelList,
 } from 'recharts';
 import {
   Grid,
@@ -16,7 +17,7 @@ import { getAll, selectCompanyState } from '../../reducers/company';
 import { selectUserState } from '../../reducers/user';
 import { SECTOR_PATH, COMPANY_PATH } from '../../config/paths';
 import CompanyCheckBox from '../../components/CompanyCheckBox';
-import { green, salmon } from '../../themes/colors';
+import { green, rose, purple, salmon, prussianBlue, yellow, orange } from '../../themes/colors';
 
 const Market = () => {
   const dispatch = useAppDispatch();
@@ -25,11 +26,6 @@ const Market = () => {
   const userState = useAppSelector(selectUserState);
 
   const [isSelected, setIsSelected] = useState<boolean[]>([false]);
-  const [data, setData] = useState<any[]>([
-    { name: 'Page A', Orange: 900 },
-    { name: 'Page B', Orange: 100 },
-    { name: 'Page C', Orange: 400 },
-  ]);
 
   const [pieData] = useState([
     [
@@ -54,8 +50,26 @@ const Market = () => {
     ],
   ]);
 
+  const lineData = useMemo(() => {
+    // eslint-disable-next-line prefer-destructuring
+    const length = companyState.companies[0].stock_price.length;
+    const data = [];
+    for (let i = 0; i < length; i += 1) {
+      const singlePointData: any = {};
+      for (let j = 0; j < companyState.companies.length; j += 1) {
+        singlePointData[companyState.companies[j].name] = companyState.companies[j].stock_price[i];
+      }
+      data.push(singlePointData);
+    }
+    return data;
+  }, [companyState.companies]);
+
+  const chartColors = [green, rose, purple, salmon, prussianBlue, yellow, orange];
+
   useEffect(() => {
-    dispatch(getAll());
+    if (companyState.companies.length < 2) {
+      dispatch(getAll());
+    }
   }, []);
 
   useEffect(() => {
@@ -71,13 +85,6 @@ const Market = () => {
     const newState = isSelected.slice();
     newState[index] = !newState[index];
     setIsSelected(newState);
-
-    const newDataState = data.map((item, itemIndex) => {
-      // eslint-disable-next-line no-param-reassign
-      item[companyState.companies[index].name] = 100 * (itemIndex + 4);
-      return item;
-    });
-    setData(newDataState);
   }, [isSelected]);
 
   return (
@@ -124,9 +131,21 @@ const Market = () => {
 
         <Grid item xs={12} sm={6} md={8} lg={9}>
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-              <Line type="monotone" dataKey="Orange" strokeWidth={4} stroke={green} />
-              <Line type="monotone" dataKey="Samsing" strokeWidth={4} stroke={green} />
+            <LineChart data={lineData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              {companyState.companies.map((company, index) => {
+                if (isSelected[index]) {
+                  return (
+                    <Line
+                      key={company.id}
+                      type="monotone"
+                      dataKey={company.name}
+                      strokeWidth={4}
+                      stroke={chartColors.shift()}
+                    />
+                  );
+                }
+                return null;
+              })}
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />

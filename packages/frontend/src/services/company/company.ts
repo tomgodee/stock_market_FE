@@ -6,6 +6,14 @@ function getAll(): any {
   return baseService.get(`${BASE_URL}`);
 }
 
+function getAllWithProfit(): any {
+  return baseService.get(`${BASE_URL}`, {
+    params: {
+      withProfit: true,
+    },
+  });
+}
+
 function getManyBySector(sectorName: string): any {
   return baseService.get(`${BASE_URL}`, {
     params: {
@@ -20,6 +28,7 @@ function getOne(companyId: number): any {
 
 export default {
   getAll,
+  getAllWithProfit,
   getManyBySector,
   getOne,
 };

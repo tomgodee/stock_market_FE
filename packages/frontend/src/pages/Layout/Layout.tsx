@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Switch, Route, Redirect } from 'react-router-dom';
-import { Button } from '@material-ui/core';
 import { useAppSelector } from '../../store/hooks';
 import { selectUserState, verifyToken } from '../../reducers/user';
+import { getAllWithProfit } from '../../reducers/company';
 import {
   LOGIN_PATH, MARKET_PATH, PROFILE_PATH, SECTOR_PATH,
   SECTOR_DETAILS_PATH, COMPANY_DETAILS_PATH, COMPANY_PATH,
@@ -56,6 +56,10 @@ const Layout = () => {
     history.push(LOGIN_PATH);
   };
 
+  const nextQuarter = () => {
+    dispatch(getAllWithProfit());
+  };
+
   useEffect(() => {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
     if (!accessToken) {
@@ -97,6 +101,7 @@ const Layout = () => {
           <NextButton
             variant="contained"
             color="secondary"
+            onClick={nextQuarter}
           >
             Next quarter
           </NextButton>

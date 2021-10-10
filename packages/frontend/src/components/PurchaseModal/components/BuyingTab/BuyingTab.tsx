@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { last } from 'lodash';
 import {
   Button,
   TextField,
@@ -27,12 +28,12 @@ const BuyingTab = (props: BuyingTabProps) => {
   const dispatch = useAppDispatch();
 
   const maxAmount = useMemo(() => {
-    if (props.buyingMode) return (Math.floor(Math.floor(userState.money / props.company.stock_price) / 100) * 100);
+    if (props.buyingMode) return (Math.floor(Math.floor(userState.money / (last(props.company.stock_price)!)) / 100) * 100);
     return userState.stocks.find((stock) => stock.ticker === props.company.ticker)?.amount;
   }, [amount]);
 
   const worth = useMemo(() => {
-    return amount * props.company.stock_price;
+    return amount * (last(props.company.stock_price)!);
   }, [amount]);
 
   const handleConfirm = () => {
