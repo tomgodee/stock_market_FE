@@ -8,8 +8,11 @@ import {
 const initialState: ScoreState = {
   score: 0,
   topScores: [{
+    id: 0,
     score: 0,
+    createdAt: '',
     user: {
+      id: 0,
       name: '',
     },
   }],

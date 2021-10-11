@@ -5,9 +5,12 @@ interface Score {
 interface ScoreState {
   score: number;
   topScores: {
+    id: number;
     score: number;
+    createdAt: string;
     user: {
       name: string;
+      id: number;
     };
   }[];
 }

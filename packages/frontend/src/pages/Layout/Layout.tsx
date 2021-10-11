@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory, Switch, Route, Redirect } from 'react-router-dom';
+import { useHistory, useLocation, Switch, Route, Redirect } from 'react-router-dom';
 import { last } from 'lodash';
 import { useAppSelector } from '../../store/hooks';
 import { selectUserState, verifyToken } from '../../reducers/user';
@@ -35,6 +35,7 @@ import {
 
 const Layout = () => {
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const userState = useAppSelector(selectUserState);
   const companyState = useAppSelector(selectCompanyState);
@@ -121,13 +122,16 @@ const Layout = () => {
             </HeaderMenu>
 
           </HeaderProfileContainer>
-          <NextButton
-            variant="contained"
-            color="secondary"
-            onClick={nextQuarter}
-          >
-            {isGameOver ? 'END GAME' : 'NEXT QUARTER'}
-          </NextButton>
+          {!location.pathname.includes(LEADERBOARD_PATH)
+            && (
+              <NextButton
+                variant="contained"
+                color="secondary"
+                onClick={nextQuarter}
+              >
+                {isGameOver ? 'END GAME' : 'NEXT QUARTER'}
+              </NextButton>
+            )}
         </Toolbar>
       </Header>
 

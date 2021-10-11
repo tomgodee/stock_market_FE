@@ -15,7 +15,16 @@ export const shuffle = (text: string) => {
   return a.join('');
 };
 
+export const capitalize = (text: string) => {
+  const a = text.split(' ').map((entry, index) => {
+    if (index === 0) return entry.toUpperCase();
+    return entry;
+  }).join(' ');
+  return a;
+};
+
 export default {
   sum,
   shuffle,
+  capitalize,
 };
